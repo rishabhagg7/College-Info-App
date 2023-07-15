@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/collegeListFragment">
+
+    <fragment
+        android:id="@+id/collegeListFragment"
+        android:name="com.example.collegeinfo.ui.CollegeListFragment"
+        android:label="College Info"
+        tools:layout="@layout/fragment_college_list" >
+        <action
+            android:id="@+id/action_collegeListFragment_to_collegeDetailFragment"
+            app:destination="@id/collegeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/collegeDetailFragment"
+        android:name="com.example.collegeinfo.ui.CollegeDetailFragment"
+        android:label="College Detail"
+        tools:layout="@layout/fragment_college_detail" />
+</navigation>

@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">College Info</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="established_year">Established Year: %s</string>
+    <string name="college_detail_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Praesent ultrices congue rutrum. Phasellus elementum ipsum ac convallis aliquam. Suspendisse
+        eleifend eros a enim faucibus mollis. Nunc placerat, est vitae vestibulum blandit, dolor
+        diam fringilla tellus, eu euismod mauris neque at neque.</string>
+
+    <string name="iit_bombay">Indian Institute of Technology Bombay</string>
+    <string name="location_iit_bombay">Mumbai, India</string>
+    <string name="established_year_iit_bombay">Established Year: 1958</string>
+    <string name="about_college">About College</string>
+    <string name="establishedYear">Established Year %s</string>
+</resources>
