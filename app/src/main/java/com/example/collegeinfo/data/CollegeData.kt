@@ -2,7 +2,9 @@ package com.example.collegeinfo.data
 
 import android.util.Log
 import com.example.collegeinfo.model.College
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 object CollegeData{
     fun setCollegeData(){
@@ -69,22 +71,15 @@ object CollegeData{
                 Log.w(TAG, "Error adding document", it)
             }
     }
-//    fun getCollegeData(): ArrayList<CollegeItem>{
-//        return arrayListOf(
-//            CollegeItem(
-//                id = 1,
-//                collegeNameId = R.string.iit_bombay,
-//                collegeEstablishedYear = R.string.established_year_iit_bombay,
-//                collegeLogoId = R.drawable.logo_iit_bombay,
-//                collegePhotoId = R.drawable.photo_iit_bombay,
-//                collegeLocationId = R.string.location_iit_bombay
-//            )
-//        )
-//    }
+    private suspend fun getListOfColleges(): List<DocumentSnapshot>{
+        val db = FirebaseFirestore.getInstance()
+        val snapshot = db.collection("Colleges").get().await()
+        return snapshot.documents
+    }
 
-//    fun getCollegeData(): ArrayList<College>{
-////        val collegeList: ArrayList<College> = arrayListOf()
-//        val collegeData: ArrayList<College> = arrayListOf()
+    suspend fun getCollegeData(): ArrayList<College>{
+//        val collegeList: ArrayList<College> = arrayListOf()
+        val collegeData: ArrayList<College> = arrayListOf()
 //        val db = FirebaseFirestore.getInstance()
 //        db.collection("Colleges")
 //            .get()
@@ -108,31 +103,18 @@ object CollegeData{
 //            }
 ////        return collegeList
 //        Log.d("GettingData", "Success with ${collegeData.isEmpty()}")
-//        return collegeData
-//    }
-    fun getCollegeData(callback: CollegeDataCallBack){
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Colleges")
-            .get()
-            .addOnSuccessListener {
-                if(!it.isEmpty){
-                    val collegeData: ArrayList<College> = arrayListOf()
-                    for(data in it.documents){
-                        val college: College? = data.toObject(College::class.java)
-                        if (college != null) {
-                            collegeData.add(college)
-                        }
-                    }
-                    callback.onCollegeDataRecieved(collegeData)
+        try {
+            val collegeList = getListOfColleges()
+            for(dS in collegeList){
+                val college:College? = dS.toObject(College::class.java)
+                if(college != null){
+                    collegeData.add(college)
                 }
             }
-            .addOnFailureListener {
-                Log.d("GettingData", "Error getting document", it)
-            }
-    }
-
-    interface CollegeDataCallBack {
-        fun onCollegeDataRecieved(collegeData: ArrayList<College>)
+        } catch (e: Exception){
+            Log.d("Fetching Data","${e.message}")
+        }
+        return collegeData
     }
 }
 
